@@ -37,9 +37,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         List<Spot> spotList=parkingLot.getSpotList();
 
-        if(spotList==null){
-            throw new Exception("Cannot make reservation");
-        }
+
 
         int min=Integer.MAX_VALUE;
         Integer minSpotId=null;
@@ -47,13 +45,13 @@ public class ReservationServiceImpl implements ReservationService {
 
         for(Spot spot:spotList){
             if(spot.getPricePerHour()<min && spot.getOccupied()==false){
-                if(numberOfWheels==2 && spot.getSpotType()==SpotType.TWO_WHEELER || spot.getSpotType()==SpotType.FOUR_WHEELER || spot.getSpotType()==SpotType.OTHERS){
+                if(numberOfWheels==2 && spot.getSpotType()==SpotType.TWO_WHEELER || spot.getSpotType()==SpotType.OTHERS){
                     min=spot.getPricePerHour();
                     minSpotId=spot.getId();
-                }else if(numberOfWheels==4 || numberOfWheels>4 && spot.getSpotType()==SpotType.FOUR_WHEELER || spot.getSpotType()==SpotType.OTHERS){
+                }else if(numberOfWheels==4 && spot.getSpotType()==SpotType.FOUR_WHEELER || spot.getSpotType()==SpotType.OTHERS){
                     min=spot.getPricePerHour();
                     minSpotId=spot.getId();
-                }else if(numberOfWheels>4){
+                }else if(numberOfWheexls>4){
                     min=spot.getPricePerHour();
                     minSpotId=spot.getId();
                 }
