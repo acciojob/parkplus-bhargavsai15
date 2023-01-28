@@ -44,23 +44,37 @@ public class ReservationServiceImpl implements ReservationService {
         int min=Integer.MAX_VALUE;
         Integer minSpotId=null;
 
+
         for(Spot spot:spotList){
             if(spot.getPricePerHour()<min && spot.getOccupied()==false){
-                min=spot.getPricePerHour();
-                minSpotId=spot.getId();
+                if(numberOfWheels==2 && spot.getSpotType()==SpotType.TWO_WHEELER || spot.getSpotType()==SpotType.FOUR_WHEELER || spot.getSpotType()==SpotType.OTHERS){
+                    min=spot.getPricePerHour();
+                    minSpotId=spot.getId();
+                }else if(numberOfWheels==4 || numberOfWheels>4 && spot.getSpotType()==SpotType.FOUR_WHEELER || spot.getSpotType()==SpotType.OTHERS){
+                    min=spot.getPricePerHour();
+                    minSpotId=spot.getId();
+                }else if(numberOfWheels>4){
+                    min=spot.getPricePerHour();
+                    minSpotId=spot.getId();
+                }
             }
         }
+
         if(minSpotId== Integer.MAX_VALUE){
             throw new Exception("Cannot make reservation");
         }
 
         Spot spot=spotRepository3.findById(minSpotId).get();
+
         List<Reservation> reservationList=spot.getReservationList();
+
         List<Reservation> reservations=user.getReservationList();
+
         int totalPrice=min*timeInHours;
 
         reservation.setUser(user);
         reservation.setSpot(spot);
+        spot.setOccupied(true);
         reservation.setNumberOfHours(timeInHours);
 
         reservationList.add(reservation);
