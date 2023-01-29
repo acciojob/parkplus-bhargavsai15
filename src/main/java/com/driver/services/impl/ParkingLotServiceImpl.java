@@ -25,11 +25,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     @Override
     public ParkingLot addParkingLot(String name, String address) {
         ParkingLot parkingLot=new ParkingLot(name,address);
-        try{
-            parkingLotRepository1.save(parkingLot);
-        }catch (Exception e){
-            System.out.println("Error");
-        }
+
         return parkingLot;
     }
 
