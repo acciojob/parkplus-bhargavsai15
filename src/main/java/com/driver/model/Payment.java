@@ -28,6 +28,11 @@ public class Payment {
         this.reservation = reservation;
     }
 
+    public Payment(boolean b, PaymentMode paymentMode) {
+        this.paymentCompleted=b;
+        this.paymentMode=paymentMode;
+    }
+
     public int getId() {
         return id;
     }
